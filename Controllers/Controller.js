@@ -31,7 +31,7 @@ const addMovie = async (req, res) => {
     })
     req.on('end', () => {
         const parsedData = JSON.parse(data);
-        parsedData.id = null;
+        parsedData.id = moviesList[moviesList.length - 1].id + 1;
         moviesList.push(parsedData);
         res.end('Movie added succesfully')
         const pathToAppend = path.join(__dirname, '..', 'data.json')
