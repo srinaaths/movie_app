@@ -6,7 +6,7 @@ const fs = require('fs')
 const getAllMovies = async (req, res) => {
     try {
         const data = await MovieAPI.findAll();
-        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(data))
     } catch (error) {
         console.log(error);
@@ -16,11 +16,11 @@ const getAllMovies = async (req, res) => {
 const getMovieById = async (req, res, id) => {
     try {
         const data = await MovieAPI.findById(id);
-        res.writeHead(200, {'Content-Type': 'application/json'})
+        res.writeHead(200, { 'Content-Type': 'application/json' })
         res.end(JSON.stringify(data))
     } catch (error) {
-        res.writeHead(200, {'Content-Type': 'application/json'})
-        res.end(JSON.stringify({'error': error}))
+        res.writeHead(200, { 'Content-Type': 'application/json' })
+        res.end(JSON.stringify({ 'error': error }))
     }
 }
 
@@ -30,11 +30,13 @@ const addMovie = async (req, res) => {
         data += chunk;
     })
     req.on('end', () => {
-        moviesList.push(JSON.parse(data));
+        const parsedData = JSON.parse(data);
+        parsedData.id = null;
+        moviesList.push(parsedData);
         res.end('Movie added succesfully')
         const pathToAppend = path.join(__dirname, '..', 'data.json')
-        fs.writeFile(pathToAppend, JSON.stringify(moviesList),(err) => {
-            if(err)
+        fs.writeFile(pathToAppend, JSON.stringify(moviesList), (err) => {
+            if (err)
                 console.log(err.message);
             else
                 console.log('success');
@@ -42,4 +44,4 @@ const addMovie = async (req, res) => {
     })
 }
 
-module.exports = {getAllMovies, getMovieById, addMovie}
+module.exports = { getAllMovies, getMovieById, addMovie }
