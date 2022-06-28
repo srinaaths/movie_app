@@ -21,4 +21,14 @@ const getMovieById = async (req, res, id) => {
     }
 }
 
-module.exports = {getAllMovies, getMovieById}
+const addMovie = async (req, res) => {
+    let data = "";
+    req.on('data', chunk => {
+        data += chunk;
+    })
+    req.on('end', () => {
+        console.log(JSON.parse(data))
+    })
+}
+
+module.exports = {getAllMovies, getMovieById, addMovie}

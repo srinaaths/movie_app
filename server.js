@@ -1,5 +1,5 @@
 const http = require('http')
-const {getAllMovies, getMovieById} = require('./Controllers/Controller.js')
+const {getAllMovies, getMovieById, addMovie} = require('./Controllers/Controller.js')
 
 // const data = require('./data.json')
 
@@ -14,13 +14,7 @@ const server = http.createServer((req, res) => {
         getMovieById(req, res, id);
     }
     else if(req.url === '/addmovie' && req.method === 'POST') {
-        let data = "";
-        req.on('data', chunk => {
-            data += chunk;
-        })
-        req.on('end', () => {
-            console.log(JSON.parse(data))
-        })
+        addMovie(req, res);
     }
 })
 server.listen(PORT, () => console.log(`listening on port ${PORT}`))
