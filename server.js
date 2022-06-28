@@ -13,5 +13,14 @@ const server = http.createServer((req, res) => {
         const id = (req.url.split('/'))[2];
         getMovieById(req, res, id);
     }
+    else if(req.url === '/addmovie' && req.method === 'POST') {
+        let data = "";
+        req.on('data', chunk => {
+            data += chunk;
+        })
+        req.on('end', () => {
+            console.log(JSON.parse(data))
+        })
+    }
 })
 server.listen(PORT, () => console.log(`listening on port ${PORT}`))
