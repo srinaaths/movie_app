@@ -10,4 +10,15 @@ const getAllMovies = async (req, res) => {
     }
 }
 
-module.exports = {getAllMovies}
+const getMovieById = async (req, res, id) => {
+    try {
+        const data = await MovieAPI.findById(id);
+        res.writeHead(200, {'Content-Type': 'application/json'})
+        res.end(JSON.stringify(data))
+    } catch (error) {
+        res.writeHead(200, {'Content-Type': 'application/json'})
+        res.end(JSON.stringify({'error': error}))
+    }
+}
+
+module.exports = {getAllMovies, getMovieById}
