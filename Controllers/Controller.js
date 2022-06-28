@@ -33,7 +33,6 @@ const addMovie = async (req, res) => {
         const parsedData = JSON.parse(data);
         parsedData.id = moviesList[moviesList.length - 1].id + 1;
         moviesList.push(parsedData);
-        res.end('Movie added succesfully')
         const pathToAppend = path.join(__dirname, '..', 'data.json')
         fs.writeFile(pathToAppend, JSON.stringify(moviesList), (err) => {
             if (err)
@@ -41,7 +40,35 @@ const addMovie = async (req, res) => {
             else
                 console.log('success');
         })
+        res.end('Movie added succesfully')
     })
 }
 
-module.exports = { getAllMovies, getMovieById, addMovie }
+const updateMovie = (req, res, id) => {
+    let data = "";
+    req.on('data', chunk => {
+        data += chunk
+    })
+    req.on('end', () => {
+        console.log(data);
+        const parsedData = JSON.parse(data);
+        parsedData.id = id;
+        for(let i = 0; i < moviesList.length; ++i) {
+            if(moviesList[i].id == id) {
+                console.log('in');
+                moviesList.splice(i, 1, parsedData);
+                break;
+            }
+        }
+        const pathToWrite = path.join(__dirname, '..', 'data.json')
+        fs.writeFile(pathToWrite, JSON.stringify(moviesList), (err) => {
+            if (err)
+                console.log(err.message);
+            else
+                console.log('success');
+        })
+        res.end('movie updated succesfully')
+    })
+}
+
+module.exports = { getAllMovies, getMovieById, addMovie, updateMovie }
