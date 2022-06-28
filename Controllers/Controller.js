@@ -1,4 +1,4 @@
-const MovieAPI = require("./MovieAPIs.js")
+const MovieAPI = require('../ModelAPIs/MovieAPIs.js')
 
 const getAllMovies = async (req, res) => {
     try {
@@ -9,3 +9,5 @@ const getAllMovies = async (req, res) => {
         console.log(error);
     }
 }
+
+module.exports = {getAllMovies}

@@ -1,4 +1,5 @@
 const http = require('http')
+const {getAllMovies} = require('./Controllers/Controller.js')
 
 const PORT = process.env.PORT || 8080;
 
