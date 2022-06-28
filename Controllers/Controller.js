@@ -53,8 +53,8 @@ const updateMovie = (req, res, id) => {
         console.log(data);
         const parsedData = JSON.parse(data);
         parsedData.id = id;
-        for(let i = 0; i < moviesList.length; ++i) {
-            if(moviesList[i].id == id) {
+        for (let i = 0; i < moviesList.length; ++i) {
+            if (moviesList[i].id == id) {
                 console.log('in');
                 moviesList.splice(i, 1, parsedData);
                 break;
@@ -72,15 +72,15 @@ const updateMovie = (req, res, id) => {
 }
 
 const deleteMovie = (req, res, id) => {
-    for(let i = 0; i < moviesList.length; ++i) {
-        if(moviesList[i].id == id) {
+    for (let i = 0; i < moviesList.length; ++i) {
+        if (moviesList[i].id == id) {
             moviesList.splice(i, 1);
             break;
         }
     }
     const pathToWrite = path.join(__dirname, '..', 'data.json')
     fs.writeFile(pathToWrite, JSON.stringify(moviesList), (err) => {
-        if(err)
+        if (err)
             console.log(err);
         else
             res.end('deletion succesful');
@@ -99,7 +99,7 @@ const searchByGenre = async (req, res, searchTerm) => {
 
     try {
         const resArr = await MovieAPI.findByGenre(searchTerm);
-        res.writeHead(200, {'Content-Type': 'application/json'})
+        res.writeHead(200, { 'Content-Type': 'application/json' })
         res.end(JSON.stringify(resArr));
     } catch (error) {
         console.log(error);
@@ -113,7 +113,19 @@ const addReview = (req, res, id) => {
     })
     req.on('end', () => {
         console.log(data);
+        for (let i = 0; i < moviesList.length; ++i) {
+            if (moviesList[i].id == id) {
+                console.log(data);
+                moviesList[i].review = data;
+                moviesList.splice(i, 1, moviesList[i]);
+                const pathToWrite = path.join(__dirname, '..', 'data.json');
+                fs.writeFile(pathToWrite, JSON.stringify(moviesList), (err) => {
+                    console.log(err);
+                })
+                res.end('added review')
+            }
+        }
     })
 }
 
-module.exports = { getAllMovies, getMovieById, addMovie, updateMovie, deleteMovie, searchByGenre, addReview}
+module.exports = { getAllMovies, getMovieById, addMovie, updateMovie, deleteMovie, searchByGenre, addReview }
