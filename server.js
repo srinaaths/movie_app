@@ -1,5 +1,5 @@
 const http = require('http')
-const {getAllMovies, getMovieById, addMovie, updateMovie, deleteMovie} = require('./Controllers/Controller.js')
+const {getAllMovies, getMovieById, addMovie, updateMovie, deleteMovie, searchByGenre} = require('./Controllers/Controller.js')
 
 // const data = require('./data.json')
 

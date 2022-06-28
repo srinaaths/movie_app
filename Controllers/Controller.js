@@ -87,4 +87,14 @@ const deleteMovie = (req, res, id) => {
     })
 }
 
-module.exports = { getAllMovies, getMovieById, addMovie, updateMovie, deleteMovie}
+const searchByGenre = (req, res, searchTerm) => {
+    const resArr = [];
+    for(let i = 0; i < moviesList.length; ++i) {
+        if(moviesList[i].genres.includes(searchTerm)) {
+            resArr.push(moviesList[i])
+        }
+    }
+    res.end(JSON.stringify(resArr))
+}
+
+module.exports = { getAllMovies, getMovieById, addMovie, updateMovie, deleteMovie, searchByGenre}
