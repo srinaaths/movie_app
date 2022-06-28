@@ -87,7 +87,7 @@ const deleteMovie = (req, res, id) => {
     })
 }
 
-const searchByGenre = (req, res, searchTerm) => {
+const searchByGenre = async (req, res, searchTerm) => {
     // const resArr = [];
     // for(let i = 0; i < moviesList.length; ++i) {
     //     if(moviesList[i].genres.includes(searchTerm)) {
@@ -95,16 +95,15 @@ const searchByGenre = (req, res, searchTerm) => {
     //     }
     // }
 
-    // implementation using filter
+    // implementation using async await & filter
 
-    const isGenreMatching = (movie) => {
-        if(movie.genres.includes(searchTerm))
-            return true;
+    try {
+        const resArr = await MovieAPI.findByGenre(searchTerm);
+        res.writeHead(200, {'Content-Type': 'application/json'})
+        res.end(JSON.stringify(resArr));
+    } catch (error) {
+        console.log(error);
     }
-
-    const resArr = moviesList.filter(isGenreMatching)
-
-    res.end(JSON.stringify(resArr))
 }
 
 module.exports = { getAllMovies, getMovieById, addMovie, updateMovie, deleteMovie, searchByGenre}

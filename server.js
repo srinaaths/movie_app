@@ -24,7 +24,7 @@ const server = http.createServer((req, res) => {
         const id = req.url.split('/')[2];
         deleteMovie(req, res, id);
     }
-    else if(req.url.match(/\/genre\/([a-zA-Z]*)/)) {
+    else if(req.url.match(/\/genre\/([a-zA-Z]*)/) && req.method === 'GET') {
         const searchTerm = req.url.split('/')[2];
         searchByGenre(req, res, searchTerm)
     }

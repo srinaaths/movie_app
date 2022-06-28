@@ -16,6 +16,17 @@ const findById = (id) => {
     })
 }
 
+const findByGenre = (searchTerm) => {
+    let res = [];
+    const isGenreMatching = (movie) => {
+        if(movie.genres.includes(searchTerm))
+            return true;
+    }
+    return new Promise((resolve, reject) => {
+        resolve(movieList.filter(isGenreMatching))
+    })
+}
+
 module.exports = {
-    findAll, findById
+    findAll, findById, findByGenre
 }
