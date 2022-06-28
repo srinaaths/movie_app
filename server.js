@@ -1,5 +1,5 @@
 const http = require('http')
-const {getAllMovies, getMovieById, addMovie, updateMovie} = require('./Controllers/Controller.js')
+const {getAllMovies, getMovieById, addMovie, updateMovie, deleteMovie} = require('./Controllers/Controller.js')
 
 // const data = require('./data.json')
 
@@ -19,6 +19,10 @@ const server = http.createServer((req, res) => {
     else if(req.url.match(/\/update\/([0-9]+)/)) {
         const id = req.url.split('/')[2];
         updateMovie(req, res, id);
+    }
+    else if(req.url.match(/\/delete\/([0-9]+)/)) {
+        const id = req.url.split('/')[2];
+        deleteMovie(req, res, id);
     }
 })
 server.listen(PORT, () => console.log(`listening on port ${PORT}`))

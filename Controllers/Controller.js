@@ -71,4 +71,20 @@ const updateMovie = (req, res, id) => {
     })
 }
 
-module.exports = { getAllMovies, getMovieById, addMovie, updateMovie }
+const deleteMovie = (req, res, id) => {
+    for(let i = 0; i < moviesList.length; ++i) {
+        if(moviesList[i].id == id) {
+            moviesList.splice(i, 1);
+            break;
+        }
+    }
+    const pathToWrite = path.join(__dirname, '..', 'data.json')
+    fs.writeFile(pathToWrite, JSON.stringify(moviesList), (err) => {
+        if(err)
+            console.log(err);
+        else
+            res.end('deletion succesful');
+    })
+}
+
+module.exports = { getAllMovies, getMovieById, addMovie, updateMovie, deleteMovie}
