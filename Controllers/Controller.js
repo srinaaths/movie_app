@@ -106,4 +106,14 @@ const searchByGenre = async (req, res, searchTerm) => {
     }
 }
 
-module.exports = { getAllMovies, getMovieById, addMovie, updateMovie, deleteMovie, searchByGenre}
+const addReview = (req, res, id) => {
+    let data = "";
+    req.on('data', (chunk) => {
+        data += chunk;
+    })
+    req.on('end', () => {
+        console.log(data);
+    })
+}
+
+module.exports = { getAllMovies, getMovieById, addMovie, updateMovie, deleteMovie, searchByGenre, addReview}

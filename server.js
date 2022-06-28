@@ -1,5 +1,5 @@
 const http = require('http')
-const {getAllMovies, getMovieById, addMovie, updateMovie, deleteMovie, searchByGenre} = require('./Controllers/Controller.js')
+const {getAllMovies, getMovieById, addMovie, updateMovie, deleteMovie, searchByGenre, addReview} = require('./Controllers/Controller.js')
 
 // const data = require('./data.json')
 
@@ -27,6 +27,10 @@ const server = http.createServer((req, res) => {
     else if(req.url.match(/\/genre\/([a-zA-Z]*)/) && req.method === 'GET') {
         const searchTerm = req.url.split('/')[2];
         searchByGenre(req, res, searchTerm)
+    }
+    else if(req.url.match(/\/addreview\/([0-9]+)/) && req.method === 'POST') {  
+        const id = req.url.split('/')[2];        
+        addReview(req, res, id);
     }
     else {
         console.log('invalid url');
