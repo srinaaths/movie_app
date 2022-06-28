@@ -1,4 +1,7 @@
 const MovieAPI = require('../ModelAPIs/MovieAPIs.js')
+const moviesList = require('../data.json')
+const path = require('path')
+const fs = require('fs')
 
 const getAllMovies = async (req, res) => {
     try {
@@ -27,7 +30,15 @@ const addMovie = async (req, res) => {
         data += chunk;
     })
     req.on('end', () => {
-        console.log(JSON.parse(data))
+        moviesList.push(JSON.parse(data));
+        res.end('Movie added succesfully')
+        const pathToAppend = path.join(__dirname, '..', 'data.json')
+        fs.writeFile(pathToAppend, JSON.stringify(moviesList),(err) => {
+            if(err)
+                console.log(err.message);
+            else
+                console.log('success');
+        })
     })
 }
 
