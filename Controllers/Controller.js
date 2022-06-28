@@ -88,12 +88,22 @@ const deleteMovie = (req, res, id) => {
 }
 
 const searchByGenre = (req, res, searchTerm) => {
-    const resArr = [];
-    for(let i = 0; i < moviesList.length; ++i) {
-        if(moviesList[i].genres.includes(searchTerm)) {
-            resArr.push(moviesList[i])
-        }
+    // const resArr = [];
+    // for(let i = 0; i < moviesList.length; ++i) {
+    //     if(moviesList[i].genres.includes(searchTerm)) {
+    //         resArr.push(moviesList[i])
+    //     }
+    // }
+
+    // implementation using filter
+
+    const isGenreMatching = (movie) => {
+        if(movie.genres.includes(searchTerm))
+            return true;
     }
+
+    const resArr = moviesList.filter(isGenreMatching)
+
     res.end(JSON.stringify(resArr))
 }
 
